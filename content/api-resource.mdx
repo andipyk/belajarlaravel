@@ -1,47 +1,52 @@
 ---
-title: Laravel API Resources di Laravel 11
-description: Laravel API Resources di Laravel 11
+title: API Resources di Laravel 11
+description: Panduan lengkap menggunakan API Resources di Laravel 11
 ---
 
 Saya akan membahas tentang PHP, dimana pasti Anda yang akan teringat antara Laravel atau WordPress, tanpa bermaksud menyudutkan framework PHP lainnya. Mengingat status PHP sebagai bahasa pemrograman Backend, tentu kurang lengkap jika tidak membahas seputar API. Setiap backend membutuhkan API untuk menghubungkan "cinta terlarang" Backend dengan Frontend. Terlarang bagi penganut sekte monolith garis keras yang berpendapat bahwa satu bahasa harus digunakan untuk Backend dan Frontend.
 
-Apa itu API Resources?
-----------------------
+## Apa itu API Resources?
 
-Setelah Anda memahami secara umum tentang API, sekarang mari kita bahas topik yang lebih spesifik. Saya akan menjelaskan tentang API Resource yang secara sederhana dapat dianalogikan seperti "cetakan es batu di freezer". Hey ! Jangan tergoda dulu, karena saya ingin menjelaskan lebih detail. Bayangkan jika Anda membuat es hanya menggunakan plastik transparan atau kantong plastik hitam yang diletakkan di freezer - bentuknya pasti akan kacau dan tidak beraturan. Namun, jika Anda menggunakan cetakan, hasilnya akan terlihat rapi, konsisten, dan tidak berantakan.
+Setelah Anda memahami secara umum tentang API, sekarang mari kita bahas topik yang lebih spesifik. Saya akan menjelaskan tentang API Resource yang secara sederhana dapat dianalogikan seperti "cetakan es batu di freezer". Hey! Jangan tergoda dulu, karena saya ingin menjelaskan lebih detail. 
 
-Jadi, dapat disimpulkan fungsi dari API Resource
+Bayangkan jika Anda membuat es hanya menggunakan plastik transparan atau kantong plastik hitam yang diletakkan di freezer - bentuknya pasti akan kacau dan tidak beraturan. Namun, jika Anda menggunakan cetakan, hasilnya akan terlihat rapi, konsisten, dan tidak berantakan.
 
-1.  Merapikan data Saya memberikan contoh kasus yang umum digunakan seperti memilih data mana yang ingin Anda tampilkan. Selain itu, data sensitif seperti password dapat Anda sembunyikan. Kemudian, format tanggal dan waktu juga bisa Anda sesuaikan sesuai kebutuhan.
-2.  Konsistensi API Resources dapat menciptakan konsistensi pada API yang akan Anda berikan dari Laravel ke frontend. Hal ini tercapai karena semua data yang keluar akan memiliki struktur yang sama sehingga memudahkan pengembangan di sisi frontend. Dengan demikian, penggunaan API Resources tidak hanya memudahkan programmer lain yang menggunakan API Anda, tetapi juga mengurangi kemungkinan terjadinya kesalahan format data.
+### Fungsi dari API Resource
 
-Saya sarankan agar Anda menggunakan API Resource jika ingin kode Laravel Anda tetap terstruktur dengan baik. Dengan begitu, Anda tidak perlu mengkhawatirkan masalah format data. Jika anda masih belum paham kegunaannya API Resource , tidak masalah ulang lagi baca diatas sampai paham betul atau silahkan meluncur ke dokumentasi Laravel resmi dibawah ini.
+1. **Merapikan data**
+   - Memilih data mana yang ingin Anda tampilkan
+   - Menyembunyikan data sensitif seperti password
+   - Menyesuaikan format tanggal dan waktu sesuai kebutuhan
 
-<https://laravel.com/docs/11.x/eloquent-resources>
+2. **Konsistensi**
+   - Menciptakan konsistensi pada API yang akan Anda berikan dari Laravel ke frontend
+   - Memastikan semua data yang keluar memiliki struktur yang sama
+   - Memudahkan pengembangan di sisi frontend
+   - Mengurangi kemungkinan terjadinya kesalahan format data
 
-Cara Membuat API Resource di Laravel 11
----------------------------------------
+Saya sarankan agar Anda menggunakan API Resource jika ingin kode Laravel Anda tetap terstruktur dengan baik. Dengan begitu, Anda tidak perlu mengkhawatirkan masalah format data. Jika anda masih belum paham kegunaannya API Resource, tidak masalah ulang lagi baca diatas sampai paham betul atau silahkan meluncur ke [dokumentasi Laravel resmi](https://laravel.com/docs/11.x/eloquent-resources).
+
+## Cara Membuat API Resource di Laravel 11
 
 ### Langkah 1: Membuat Resource
 
-Pertama, buka terminal atau command prompt jalankan perintah
+Pertama, buka terminal atau command prompt jalankan perintah:
 
-```
+```bash
 php artisan make:resource UserResource
-
 ```
 
 ### Langkah 2: Mengatur Format Data
 
-Buka file `UserResource.php` lalu silahkan racik format API terbaik menurut anda atau tim pada fungsi `toArray` .
+Buka file `UserResource.php` lalu silahkan racik format API terbaik menurut anda atau tim pada fungsi `toArray`:
 
-```
+```php
 <?php
 
-namespace App\\Http\\Resources;
+namespace App\Http\Resources;
 
-use Illuminate\\Http\\Request;
-use Illuminate\\Http\\Resources\\Json\\JsonResource;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
 {
@@ -58,20 +63,19 @@ class UserResource extends JsonResource
         ];
     }
 }
-
 ```
 
 ### Langkah 3: Penggunaan Resource di Controller
 
-Tahap terakhir yaitu pengunaannya tentu pasang ~~C4~~ API Resource di Controller yang sudah dimiliki
+Tahap terakhir yaitu pengunaannya di Controller yang sudah dimiliki:
 
-```
+```php
 <?php
 
-namespace App\\Http\\Controllers;
+namespace App\Http\Controllers;
 
-use App\\Models\\User;
-use App\\Http\\Resources\\UserResource;
+use App\Models\User;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -93,12 +97,10 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 }
-
 ```
 
-***Akhir*** tapi ***bukan*** yg ***terakhir***
-==============================================
+## Penutup
 
--   Silakan mencoba mengimplementasikan kode sederhana ini. Jika mengalami kendala, dapat memberikan komentar di sini dan akan segera saya tanggapi secepat mungkin.
--   Anda dapat membuat dokumentasi pribadi atau mengulas artikel ini sebagai referensi terkait API Resource untuk medium atau blog pribadi
--   Selamat mencoba! Semoga berhasil.
+* Silakan mencoba mengimplementasikan kode sederhana ini. Jika mengalami kendala, dapat memberikan komentar di sini dan akan segera saya tanggapi secepat mungkin.
+* Anda dapat membuat dokumentasi pribadi atau mengulas artikel ini sebagai referensi terkait API Resource untuk medium atau blog pribadi.
+* Selamat mencoba! Semoga berhasil!
